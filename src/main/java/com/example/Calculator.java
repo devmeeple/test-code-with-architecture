@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.exception.InvalidOperatorException;
+
 public class Calculator {
 
     public long calculate(long num1, String operator, long num2) {
