@@ -10,8 +10,12 @@ repositories {
 }
 
 dependencies {
+    // 테스트 코드
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    
+    // 테스트 검증 편의 도구
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
 }
 
 test {
