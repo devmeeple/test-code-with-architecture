@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.exception.InvalidOperatorException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
