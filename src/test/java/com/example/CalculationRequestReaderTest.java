@@ -17,11 +17,11 @@ class CalculationRequestReaderTest {
 
         // when
         System.setIn(new ByteArrayInputStream("2 + 3".getBytes()));
-        String[] result = calculationRequestReader.read();
+        CalculationRequest result = calculationRequestReader.read();
 
         // then
-        assertThat(result[0]).isEqualTo("2");
-        assertThat(result[1]).isEqualTo("+");
-        assertThat(result[2]).isEqualTo("3");
+        assertThat(result.getNum1()).isEqualTo(2);
+        assertThat(result.getOperator()).isEqualTo("+");
+        assertThat(result.getNum2()).isEqualTo(3);
     }
 }
