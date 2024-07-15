@@ -8,7 +8,7 @@ import java.util.Scanner;
  * 3. 입력 받은 값을 공백으로 분리한다.
  */
 
-public class Main {
+public class CalculatorMain {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -21,13 +21,8 @@ public class Main {
         long num1 = Long.parseLong(parts[0]);
         long num2 = Long.parseLong(parts[2]);
 
-        long answer = switch (operator) {
-            case "+" -> num1 + num2;
-            case "-" -> num1 - num2;
-            case "*" -> num1 * num2;
-            case "/" -> num1 / num2;
-            default -> throw new InvalidOperatorException();
-        };
-        System.out.println(answer);
+        long answer = new Calculator().calculate(num1, operator, num2);
+        System.out.println("계산 결과: " + answer);
+
     }
 }
