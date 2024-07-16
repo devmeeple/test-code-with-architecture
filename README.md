@@ -90,6 +90,68 @@ export class StubUserRepository implements UserRepository {
 
 테스트 가능성(Testability)은 쉽게 테스트할 수 있는지 평가하는 지표다. 결국 우리는 테스트 가능성이 높은 코드를 작성해야 한다.
 
+### 실기 전 사전 탐색
+
+- 빌더
+- 엔티티
+- private / final
+- DRY < DAMP
+- 논리로직
+
+**빌더(Builder)**
+
+빌더 패턴(Builder Pattern)은 생성자가 많아지는 문제를 해결하기 위해 사용한다. new 키워드로 객체를 선언했다면 어떨까? 생성자를 수정하면 관련된 객체를
+모두 수정해야 한다. 반면 빌더는 필요한 매개변수(Parameter)만 입력할 수 있게 돕는다. 물론 단점도 있다. 매개변수를 누락해도 컴파일러가 에러를 찾기 어렵다. 따라서 주의가 필요하다.
+
+**엔티티(Entity)**
+
+엔티티(Entity)는 크게 3가지[^3] 관점으로 다르게 정의한다. 나누기 모호한 주제지만 "지식공유자는 나누는게 좋지않을까?"라는 의견을 밝힌다.
+
+1. 도메인
+
+도메인에서 엔티티는 비즈니스 문제를 해결하기 위해 객체다. (JPA와 관련없다)
+
+```typescript
+export class User {
+  id: number;
+  name: string;
+}
+```
+
+2. 데이터베이스
+
+데이터베이스에서 엔티티는 관계형데이터베이스(Relational database, RDB)에 저장되는 객체다.
+
+```sql
+CREATE TABLE Users
+(
+    ID   INT PRIMARY KEY,
+    NAME VARCHAR(50),
+);
+```
+
+3. 영속성
+
+영속성에서 엔티티는 도메인과 데이터베이스를 연결하기 위해 사용하는 객체다. TypeORM과 같은 ORM(Object-relational mapping) 기술을 사용해 문제를 해결한다.
+
+```typescript
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+}
+```
+
+**기타 조언**
+
+- private / final 메서드: 테스트하지 않는다. 만약 어려움을 느낀다면 잘못설계되어 있다는 신호를 보낸다.
+- DRY < DAMP: DRY(Don't Repeat Yourself)는 강조되는 원칙이다. 하지만 테스트는 DAMP(Descriptive And Meaningful Phrase)를 권장한다.
+  '테스트만 읽더라도 어떤 내용인지 파악할 수 있도록 기술하자'는 의미다
+- 논리 로직을 피하라: 테스트 코드에 if, for, 덧셈 연산자 같은 논리 로직을 피하고 직관적으로 작성하자는 뜻이다.
+
 ## 느낀점
 
 강의가 구조적이다. 살아있는 책을 읽는 것 같다. 개념을 여러 장으로 나눠서 설명하는 게 인상적이다. 인용을 적극적으로 활용하고 출처를 표시하여 추가 학습 기회를 제공한다.
@@ -100,6 +162,8 @@ export class StubUserRepository implements UserRepository {
 - [김우근 'Java/Spring 테스트를 추가하고 싶은 개발자의 오답노트'](https://inf.run/EYKf)
 - [블라디미르 코리코프 '『단위 테스트』'](https://product.kyobobook.co.kr/detail/S000001805070)
 - [인프런 질문 & 답변](https://www.inflearn.com/questions/146128)
+- [X 'DRY < DAMP'](https://x.com/dylayed/status/1506405375897051136)
 
 [^1]: 회귀버그란 이전에 작동했던 기능이 개선 후 동작을 멈추는 현상이다.
 [^2]: 비결정적인 테스트란 동일한 입력과 조건에서도 동일한 결과를 보장하지 않는다. 데이터베이스, 시스템에 의존할 때 발생한다.
+[^3]: 도메인, 영속성 객체, 데이터베이스
